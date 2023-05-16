@@ -17,11 +17,11 @@ def preprocessing(df):
 df = preprocessing(df)
 
 # load the model from disk
-with open('./model.sav', 'rb') as file:
-    loaded_model = pickle.load(file)
+# with open('./model.sav', 'rb') as file:
+#     loaded_model = pickle.load(file)
 
 # load the model from disk
-# loaded_model = joblib.load("model.pkl")
+loaded_model = joblib.load("model.pkl")
 
 # Make predictions on the test set
 y_pred = loaded_model.predict(df)
