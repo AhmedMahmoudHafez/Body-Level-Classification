@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 # from sklearn import svm
 import pickle
+import joblib
 
 df = pd.read_csv('./test.csv')
 
@@ -19,8 +20,14 @@ df = preprocessing(df)
 with open('./model.sav', 'rb') as file:
     loaded_model = pickle.load(file)
 
+# load the model from disk
+# loaded_model = joblib.load("model.pkl")
+
 # Make predictions on the test set
 y_pred = loaded_model.predict(df)
+
+# map the predictions to the corresponding body level like this '0' -> 'Body Level 1', '1' -> 'Body Level 2', '2' -> 'Body Level 3', '3' -> 'Body Level 4'
+y_pred = np.array(['Body Level ' + str(int(i)+1) for i in y_pred])
 
 # print(f'y_pred: {y_pred}')
 
@@ -34,5 +41,3 @@ np.savetxt('./preds.txt', y_pred, fmt='%s')
 # print(f'accuracy: {accuracy_score(y_true, y_pred)}')
 # print(f'confusion matrix:\n {confusion_matrix(y_true, y_pred)}\n')
 # print(f'classification report:\n {classification_report(y_true, y_pred)}')
-
-
